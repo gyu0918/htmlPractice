@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="kor">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>  /*문서 태그를 선택하여 스타일 적용   선택자는 tag, id, class로 선택 가능*/
+    h2 {
+        border: 1px solid;
+        /* background-color: yellow; */
+        display : inline-block;
+        width: 1024px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+
+    }
+    body{
+        width: 1024px;
+        margin: 0px;
+    }
+    div{   /* tag 로 선택하는 선택자 */
+        /* background-color: yellow; */
+    }
+    #head{      /* tag 속성에 지정된 id로 선택하는 선택자 */
+        background-color: chartreuse;
+    }
+    ul li{    /* 메뉴 만들 떄 자주 사용 */
+        display: inline-block;
+        width: 100px;
+        border: 1px solid;
+        text-align: center;
+    }
+    ul li a{
+        text-decoration: none;     /* 밑줄제거*/
+        display: block;
+    
+    }
+    ul li a:hover{    /* 하이퍼링크 마우스 올려놓으면 색깔 바꾸게 */
+        background-color: violet;
+    }
+
+</style>
+<body>
+    <!--tag에는 id속성을 지정할 수 있다. 중요한 것은 id이름은 문서내에서 유니크 해야한다. -->
+    <div id="head"><h2>김정규 cs Study</h2></div>
+    <div>
+        <ul>
+            <li><a href="http://www.naver.com">Naver</a></li>
+            <li></li>
+            <li>Html</li>
+        </ul>
+    </div>
+    <div id="section">
+        <p>오늘의 메뉴</p>
+        <p>쿠팡에서 직구한 음료</p>
+
+    </div>
+    <h2>humman</h2>
+    
+</body>
+</html>
