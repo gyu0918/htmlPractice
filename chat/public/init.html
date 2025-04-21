@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인</title>
+  </head>
+  <body>
+    <input type="text" id="textBox" placeholder="닉네임을 입력하세요." />
+    <button id="login">로그인</button>
+  </body>
+</html>
+<script>
+  document.getElementById("login").addEventListener("click", () => {
+    let name = document.getElementById("textBox").value;
+    if (!name) return alert("닉네임을 입렵!!!");
+
+    //세션 저장
+    sessionStorage.setItem("username", name);
+
+    //대기방으로 이동
+    window.location.href = "/stay.html";
+  });
+</script>

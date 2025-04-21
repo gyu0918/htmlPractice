@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>채팅 프로그램</title>
+  </head>
+  <body>
+    <h1>실시간 채팅</h1>
+
+    <form id="form" action="">
+      <input
+        id="input"
+        autocomplete="off"
+        placeholder="메시지를 입력하세요"
+      /><button>전송</button>
+    </form>
+    <div
+      id="messages"
+      style="border: 1px solid #ccc; height: 200px; overflow: auto"
+    ></div>
+
+    <a href="http://192.168.214.10:3000/stay"
+      ><button id="leaveBtn">나가기</button></a
+    >
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var roommm;
+      //서버에 연결되는 부분
+      const socket = io();
+
+      const form = document.getElementById("form");
+      const input = document.getElementById("input");
+      const messages = document.getElementById("messages");
+
+      const roomName = sessionStorage.getItem("room");
+      console.log("현재 방 이름:", roomName);
+
+      //로그인 할때 정보 다시 불러오기
+      var username = sessionStorage.getItem("username", roomName);
+
+      // //room 연결
+      // 방에 입장 요청
+      socket.emit("joinRoom", { username, roomNum: roomName });
+
+      //message 처리
+      socket.on("messages", (data) => {
+        const item = document.createElement("li");
+        item.textContent = `${data.user}: ${data.text}`;
+        messages.appendChild(item);
+        messages.scrollTop = messages.scrollHeight;
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit("chatMessage", input.value);
+          input.value = "";
+        }
+      });
+
+      // socket.on("chat message", (msg) => {
+      //   const item = document.createElement("li");
+      //   item.textContent = msg;
+      //   messages.appendChild(item);
+      //   window.scrollTo(0, document.body.scrollHeight);
+      // });
+      // 메시지 보내기
+      // socket.emit("chatMessage", {
+      //   room: roomNum,
+      //   message: "안녕하세요, 방1 사람들만 보세요!",
+      // });
+
+      // 메시지 수신
+      socket.on("chatMessage", ({ from, message }) => {
+        const item = document.createElement("li");
+        item.textContent = `${from}: ${message}`;
+        messages.appendChild(item);
+        messages.scrollTop = messages.scrollHeight;
+
+        console.log(`${from}: ${message}`);
+      });
+
+      socket.on("qqqqq", (msg) => {
+        roommm = msg;
+      });
+
+      //나가기 서버한테 나간다고 emit보낸다음에 서버쪽에서 list안에 있는 사람 확인해서 방폭파 시킬지안시킬지 말하기
+    </script>
+  </body>
+</html>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0 20px;
+    background: #f4f4f4;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  #messages {
+    list-style-type: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background: white;
+    margin-bottom: 10px;
+  }
+
+  #messages li {
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  form {
+    display: flex;
+  }
+
+  input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 10px;
+  }
+</style>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대기방</title>
+</head>
+
+<body>
+    <a href="http://192.168.214.10:3000/aaa"></a><button id="aaa">방1</button></a>
+    <a href="http://192.168.214.10:3000/chat"><button id="chatRoom">방2</button></a>
+    <br>
+    <span id="roomPlace"></span>
+    <button id="createRoom">방만들기</button>
+
+</body>
+
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    const b1 = document.getElementById("aaa");
+    const b2 = document.getElementById("chatRoom");
+    const roomPlace = document.getElementById("roomPlace");
+
+
+    //로그인 할때 정보 다시 불러오기
+    var name = sessionStorage.getItem('username');
+    
+    if (!name) {
+        alert("로그인 정보가 없다. 다시 로그인!!")
+        window.location.href = '/init.html';
+    }
+
+    socket.emit('login', {name});
+
+
+    //roomList 달라고요청하기 서버에 
+    socket.emit("roomList",);
+
+
+    // 서버에서 오는 roomList 받기
+socket.on("roomList", (roomList) => {
+    console.log(roomList);
+    roomPlace.innerHTML = "";
+
+    for (let i = 0; i < roomList.length; i++) {
+        const roomName = roomList[i];
+        
+        // 방 버튼 생성
+        const button = document.createElement("button");
+        button.textContent = roomName;
+        button.className = "room-button"; // 중복 ID 방지
+        button.addEventListener("click", () => {
+            // 서버에 방 정보 전송
+            const userData = {
+                name,
+                room: roomName
+            };
+            socket.emit("joinRoom", userData);
+
+            // 방 이름 저장 (sessionStorage 또는 URL 파라미터 사용 가능)
+            sessionStorage.setItem("room", roomName);
+
+            // chat.html로 이동
+            window.location.href = "/chat";
+        });
+
+        // 화면에 버튼 추가
+        const wrapper = document.createElement("div");
+        wrapper.appendChild(button);
+        roomPlace.appendChild(wrapper);
+    }
+});
+
+   ////////////////////// <만들어야될것>
+    //방 선택하면 json파일로 서버에 방넘버랑 닉네임 너겨주기 
+
+
+    //서버에서 만약에 room 이 폭파됬을때 여기 html로 보내서 해당 방을 없애야된다. for문돌려서 탐색후 없애기
+
+    //방만들기 기능 구현
+    const createBtn = document.getElementById("createRoom");
+
+    createBtn.addEventListener("click", () => {
+      const newRoom = prompt("새로 만들 방 이름을 입력하세요:");
+      if (!newRoom)
+        return alert("방이름을 적으세요!");
+
+      // 서버에 방 생성 요청
+      socket.emit("createRoom", newRoom);
+
+    });
+
+
+    b1.addEventListener("click", (e) => {
+        // e.preventDefault();
+        var memberData = {
+            // 문자형 정의 방법
+            name: "정진",
+
+            // 숫자형 정의 방법
+            room: "11"
+
+
+        };
+
+        var jsonData = JSON.stringify(memberData);
+        console.log("qqqqq");
+        socket.emit("qqqqq", jsonData);
+    });
+
+</script>
