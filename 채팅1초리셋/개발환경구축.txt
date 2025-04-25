@@ -1,0 +1,17 @@
+개발환경 설치 - 혼자 합니다.
+                       10번 읽고 모르면 그때 도움을 요청합니다.
+
+1. 반디집 설치  - 반디집으로 풀어야 잘 풀립니다.
+2. 교사용 컴퓨터 자료실 > spring_web 폴더를 복사 후 본인 컴퓨터에 붙여넣기
+3. 본인 컴퓨터의 루트 디렉토리 부터 경로 기억하기
+4. 복사 한 자료에서 src 하위의 www 압축파일을 src 하위 위치에 압축풀기  - 반디집으로 풀기
+5. 복사 한 자료에서 WAS  하위의 tomcat~~ 압축파일을 WAS하위에 압축풀기 - 반디집으로 풀기
+6. 복사한 자료에서 spring tool~ 압축 파일을 현재 위치에서 압축풀기 - 반디집으로 풀기
+7. 6번에서 압축을 푼 디렉토리로 이동하면 sts.exe 파일이 있음. sts.exe 파일 실행
+8. 7번을 실행하면 workspace를 지정하라고 나옴. 이때  4번에서 작업한 src 폴더를 workspace로 지정
+9. 8번 후 sts가 실행되길 기다림
+10. sts에서 new -> import - > general -> Existing Porjects into Workspace 메뉴를 선택 후 next ->
+                select root directory 옆의 Borwse.. 버튼을누르고  8번에서 지정한
+               workspace를 지정합니다.   
+11. 10번 작업이 정상적으로 되었다면 projects에 www라 보일 것이고 . 이를 체크 하고  finish를 클릭합니다.
+12. 
